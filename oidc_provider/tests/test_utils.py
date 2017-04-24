@@ -8,8 +8,8 @@ from django.utils import timezone
 from mock import mock
 
 from oidc_provider.lib.utils.common import get_issuer, get_browser_state_or_default
-from oidc_provider.lib.utils.token import create_id_token
-from oidc_provider.tests.app.utils import create_fake_user
+from oidc_provider.lib.utils.token import create_id_token, create_token
+from oidc_provider.tests.app.utils import create_fake_user, create_fake_client
 
 
 class Request(object):
@@ -61,6 +61,7 @@ def timestamp_to_datetime(timestamp):
 class TokenTest(TestCase):
     def setUp(self):
         self.user = create_fake_user()
+        self.client = create_fake_client(response_type='id_token token')
 
     @override_settings(OIDC_IDTOKEN_EXPIRE=600)
     def test_create_id_token(self):
@@ -81,6 +82,11 @@ class TokenTest(TestCase):
             'sub': str(self.user.id),
         })
 
+    @override_settings(OIDC_CREATE_TOKEN='oidc_provider.tests.app.utils.fake_create_token_hook')
+    def test_create_id_token_with_custom_access_token_hook(self):
+        token = create_token(self.user, self.client, ["openid"])
+        self.assertEqual(token.access_token, "fake_access_token")
+        self.assertEqual(token.refresh_token, "fake_refresh_token")
 
 class BrowserStateTest(TestCase):
 

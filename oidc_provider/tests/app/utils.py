@@ -1,5 +1,10 @@
 import random
 import string
+
+from datetime import timedelta
+
+from oidc_provider import settings
+
 try:
     from urlparse import parse_qs, urlsplit
 except ImportError:
@@ -120,3 +125,23 @@ def fake_idtoken_processing_hook2(id_token, user):
     id_token['test_idtoken_processing_hook2'] = FAKE_RANDOM_STRING
     id_token['test_idtoken_processing_hook_user_email2'] = user.email
     return id_token
+
+
+def fake_create_token_hook(user, client, scope, id_token_dic=None):
+    """
+    Fake function for setting OIDC_CREATE_TOKEN
+    """
+    token = Token()
+    token.user = user
+    token.client = client
+    token.access_token = "fake_access_token"
+
+    if id_token_dic is not None:
+        token.id_token = id_token_dic
+
+    token.refresh_token = "fake_refresh_token"
+    token.expires_at = timezone.now() + timedelta(
+        seconds=settings.get('OIDC_TOKEN_EXPIRE'))
+    token.scope = scope
+
+    return token

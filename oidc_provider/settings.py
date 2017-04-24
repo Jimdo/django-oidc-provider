@@ -161,6 +161,10 @@ class DefaultSettings(object):
             'error': 'oidc_provider/error.html'
         }
 
+    @property
+    def OIDC_CREATE_TOKEN(self):
+        return 'oidc_provider.lib.utils.default.default_create_token'
+
 default_settings = DefaultSettings()
 
 

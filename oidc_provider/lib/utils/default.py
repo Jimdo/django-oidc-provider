@@ -1,4 +1,10 @@
-from oidc_provider.lib.utils.token import create_token
+import uuid
+from datetime import timedelta
+
+from django.utils import timezone
+
+from oidc_provider import settings
+from oidc_provider.models import Token
 
 
 def default_userinfo(claims, user):
@@ -74,4 +80,17 @@ def default_create_token(user, client, scope, id_token_dic=None):
     :param id_token_dic:
     :return:
     """
-    return create_token(user, client, scope, id_token_dic)
+    token = Token()
+    token.user = user
+    token.client = client
+    token.access_token = uuid.uuid4().hex
+
+    if id_token_dic is not None:
+        token.id_token = id_token_dic
+
+    token.refresh_token = uuid.uuid4().hex
+    token.expires_at = timezone.now() + timedelta(
+        seconds=settings.get('OIDC_TOKEN_EXPIRE'))
+    token.scope = scope
+
+    return token
