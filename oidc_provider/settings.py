@@ -31,7 +31,7 @@ class DefaultSettings(object):
         OPTIONAL.  Provide a way to plug into the process after
         the user has logged in, typically to perform some business logic.
         """
-        return 'oidc_provider.lib.utils.common.default_after_userlogin_hook'
+        return 'oidc_provider.lib.utils.default.default_after_userlogin_hook'
 
     @property
     def OIDC_AFTER_END_SESSION_HOOK(self):
@@ -39,7 +39,7 @@ class DefaultSettings(object):
         OPTIONAL.  Provide a way to plug into the end session process just before calling
          Django's logout function, typically to perform some business logic.
         """
-        return 'oidc_provider.lib.utils.common.default_after_end_session_hook'
+        return 'oidc_provider.lib.utils.default.default_after_end_session_hook'
 
     @property
     def OIDC_CODE_EXPIRE(self):
@@ -70,7 +70,7 @@ class DefaultSettings(object):
         reassigned identifier within the Issuer for the End-User,
         which is intended to be consumed by the Client.
         """
-        return 'oidc_provider.lib.utils.common.default_sub_generator'
+        return 'oidc_provider.lib.utils.default.default_sub_generator'
 
     @property
     def OIDC_SESSION_MANAGEMENT_ENABLE(self):
@@ -128,7 +128,7 @@ class DefaultSettings(object):
         OPTIONAL. A string with the location of your function.
         Used to populate standard claims with your user information.
         """
-        return 'oidc_provider.lib.utils.common.default_userinfo'
+        return 'oidc_provider.lib.utils.default.default_userinfo'
 
     @property
     def OIDC_IDTOKEN_PROCESSING_HOOK(self):
@@ -136,7 +136,7 @@ class DefaultSettings(object):
         OPTIONAL. A string with the location of your hook.
         Used to add extra dictionary values specific for your app into id_token.
         """
-        return 'oidc_provider.lib.utils.common.default_idtoken_processing_hook'
+        return 'oidc_provider.lib.utils.default.default_idtoken_processing_hook'
 
     @property
     def OIDC_GRANT_TYPE_PASSWORD_ENABLE(self):

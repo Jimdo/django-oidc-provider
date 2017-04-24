@@ -228,7 +228,7 @@ class TokenTestCase(TestCase):
         self.assertEqual(400, response.status_code)
         self.assertEqual('invalid_client', response_dict['error'])
 
-    @patch('oidc_provider.lib.utils.token.uuid')
+    @patch('oidc_provider.lib.utils.default.uuid')
     @override_settings(OIDC_TOKEN_EXPIRE=120,
                        OIDC_GRANT_TYPE_PASSWORD_ENABLE=True)
     def test_password_grant_full_response(self, mock_uuid):
