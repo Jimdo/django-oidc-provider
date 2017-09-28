@@ -82,6 +82,8 @@ class TokenAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
+    def cleanup_tokens(modeladmin, request, queryset):
+        queryset.update(status='p')
 
 @admin.register(RSAKey)
 class RSAKeyAdmin(admin.ModelAdmin):
