@@ -1,2 +1,2 @@
-django==1.10
+django==1.11.29
 https://github.com/juanifioren/django-oidc-provider/archive/v0.4.x.zip
